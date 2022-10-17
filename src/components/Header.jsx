@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 
 import { auth, promptSignIn, promptSignOut, storeThing } from '../services/firebase'
-import './Header.scss'
+// import './Header.scss'
 
 function Header() {
 	const [user, setUser] = useState(null)
@@ -16,18 +16,18 @@ function Header() {
 
 	return (
 		<header>
+			<h1>React project thingy</h1>
 			{user ? (
 				<p>
-					Welcome {user.displayName}
-					{
-						// <div className="user-image-wrap">
-						// 	<img src={user.photoURL} />
-						// </div>
-					}
-					<button onClick={promptSignOut}>Sign out</button>
+					Welcome {user.displayName} &nbsp;
+					<button className="btn btn-primary" onClick={promptSignOut}>
+						Sign out
+					</button>
 				</p>
 			) : (
-				<button onClick={promptSignIn}>Sign in with Google</button>
+				<button className="btn btn-primary" onClick={promptSignIn}>
+					Sign in with Google
+				</button>
 			)}
 		</header>
 	)

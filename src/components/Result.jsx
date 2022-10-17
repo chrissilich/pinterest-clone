@@ -1,7 +1,7 @@
 // import { useState, useEffect, useMemo } from 'react'
 
 // import { auth, promptSignIn, promptSignOut, storeThing } from '../services/firebase'
-import './Result.scss'
+// import './Result.scss'
 
 function Result(props) {
 	console.log(props)

@@ -1,0 +1,19 @@
+.results {
+	ul {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			margin: 0;
+			padding: 0;
+			width: 200px;
+
+			img {
+				width: 100%;
+			}
+		}
+	}
+}

@@ -1,4 +1,13 @@
 header {
-	background-color: #111;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: space-between;
 	width: 100%;
+	padding: 1em 0.75em;
+	font-size: 1.5rem;
+	h1 {
+		font-size: 3rem;
+		font-weight: bold;
+	}
 }

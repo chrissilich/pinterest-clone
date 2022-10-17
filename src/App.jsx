@@ -5,6 +5,7 @@ import { storeThing, getTags, auth } from './services/firebase'
 import Header from './components/Header'
 import Result from './components/Result'
 import Tag from './components/Tag'
+
 import './App.scss'
 
 function App() {
