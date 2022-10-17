@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
-import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs, query, where } from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -22,6 +22,9 @@ const provider = new GoogleAuthProvider()
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const tagsRef = collection(db, 'tags')
+// const imagesRef = collection(db, "images");
+
 async function storeThing(value1, value2) {
 	try {
 		const docRef = await addDoc(collection(db, 'test-collection'), {
@@ -31,6 +34,21 @@ async function storeThing(value1, value2) {
 		console.log('Document written with ID: ', docRef.id)
 	} catch (e) {
 		console.error('Error adding document: ', e)
+	}
+}
+
+async function getTags() {
+	try {
+		// Create a query against the collection.
+		const q = query(tagsRef, where('user', '==', auth.currentUser.uid))
+		const querySnapshot = await getDocs(q)
+		let simplified = []
+		querySnapshot.forEach((doc) => {
+			simplified.push({ id: doc.id, ...doc.data() })
+		})
+		return simplified
+	} catch (e) {
+		console.error('Error finding document: ', e)
 	}
 }
 
@@ -72,4 +90,4 @@ function promptSignOut() {
 		})
 }
 
-export { firebaseApp, auth, promptSignIn, promptSignOut, storeThing }
+export { firebaseApp, auth, promptSignIn, promptSignOut, storeThing, getTags }
