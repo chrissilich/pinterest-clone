@@ -1,8 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
-
 import { search } from './services/google-search'
-import { storeThing, getTags, auth } from './services/firebase'
+import { storeThing, storeTaggedImage, storeTag, getTags, auth } from './services/firebase'
+
 import Header from './components/Header'
+import Search from './components/Search'
 import Result from './components/Result'
 import Tag from './components/Tag'
 
@@ -12,13 +13,16 @@ function App() {
 	// storeThing('chris', 'silich')
 
 	const [user, setUser] = useState(null)
-	const [searchTerm, setSearchTerm] = useState('')
 	const [tags, setTags] = useState([])
+	const [newTag, setNewTag] = useState('')
 	const [results, setResults] = useState([])
 
 	// most recent query
 	let pageNumber = 0
 	let recentSearchTerm = ''
+
+	// selections
+	const [selectedImage, setSelectedImage] = useState(-1)
 
 	useEffect(() => {
 		auth.onAuthStateChanged((user) => {
@@ -30,16 +34,41 @@ function App() {
 		})
 	}, [])
 
-	const searchTermKeyPress = async (event) => {
+	useEffect(() => {
+		window.addEventListener('keyup', tagSomething)
+		return () => {
+			window.removeEventListener('keyup', tagSomething)
+		}
+	}, [])
+
+	const tagSomething = async (e) => {
+		let parsedKey = parseInt(e.key)
+		console.log('tagSomething', parsedKey, tags.length)
+		if (parsedKey <= tags.length) {
+			storeTaggedImage(tags[parsedKey - 1].id, results[selectedImage].link)
+		}
+	}
+
+	const submitSearchTerm = async (term) => {
+		if (term == recentSearchTerm) {
+			console.warn("don't search for the same thing again!")
+			return
+		}
+		recentSearchTerm = term
+		pageNumber = 0 // reset page number to 0
+		let results = await search(term, pageNumber)
+		setResults(results)
+	}
+
+	const submitNewTag = (event) => {
 		if (event.key === 'Enter') {
-			if (searchTerm == recentSearchTerm) {
-				console.warn("don't search for the same thing again!")
-				return
-			}
-			recentSearchTerm = searchTerm
-			pageNumber = 0 // reset page number to 0
-			let results = await search(searchTerm, pageNumber)
-			setResults(results)
+			// TODO check if new tag is a dupe of old tag
+			storeTag(newTag).then((res) => {
+				console.log('stored a tag?', res)
+				getTags().then((tags) => {
+					setTags(tags)
+				})
+			})
 		}
 	}
 
@@ -47,28 +76,37 @@ function App() {
 		<div className="App">
 			<Header />
 
-			<section className="search">
-				<input
-					onChange={(event) => setSearchTerm(event.target.value)}
-					onKeyDown={searchTermKeyPress}
-					id="search-term"
-					name="search-term"
-					placeholder="Search term..."
-				></input>
-			</section>
+			<Search submitSearchTerm={submitSearchTerm} />
 
 			<section className="results">
 				<ul>
-					{results && results.length && results.map((result) => <Result key={result.link} data={result} />)}
+					{results &&
+						results.length &&
+						results.map((result, i) => (
+							<Result
+								onSelect={() => setSelectedImage(i)}
+								selectedImage={selectedImage}
+								index={i}
+								key={result.link}
+								data={result}
+							/>
+						))}
 				</ul>
 			</section>
 
 			<section className="tags">
 				<ul>
+					<li className="plus">
+						<input
+							onChange={(event) => setNewTag(event.target.value)}
+							onKeyDown={submitNewTag}
+							placeholder="new tag..."
+						/>
+					</li>
 					{tags &&
 						tags.length &&
-						tags.map((tag) => {
-							return <Tag key={tag.id} data={tag} />
+						tags.map((tag, i) => {
+							return <Tag key={tag.id} data={tag} index={i + 1} />
 						})}
 				</ul>
 			</section>

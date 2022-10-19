@@ -1,4 +1,6 @@
-.results {
+section.results {
+	padding-top: 18rem;
+	padding-bottom: 10rem;
 	ul {
 		display: flex;
 		flex-direction: row;
@@ -6,13 +8,27 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		justify-content: space-around;
+		align-items: center;
+
 		li {
-			margin: 0;
+			margin: 2em 0;
 			padding: 0;
-			width: 200px;
+			width: 43vw;
+
+			&.selected {
+				img {
+					border-color: white;
+				}
+			}
 
 			img {
+				border: 6px solid transparent;
 				width: 100%;
+			}
+
+			p {
+				font-size: 1.5rem;
 			}
 		}
 	}

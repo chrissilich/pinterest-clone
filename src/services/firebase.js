@@ -37,6 +37,34 @@ async function storeThing(value1, value2) {
 	}
 }
 
+async function storeTaggedImage(tagId, image) {
+	console.log('storeTaggedImage', tagId, image)
+	try {
+		const docRef = await addDoc(collection(db, 'tagged'), {
+			tag: tagId,
+			user: auth.currentUser.uid,
+			image,
+		})
+		console.log('Document written with ID: ', docRef.id)
+		return docRef
+	} catch (e) {
+		console.error('Error adding document: ', e)
+	}
+}
+
+async function storeTag(tagName) {
+	try {
+		const docRef = await addDoc(collection(db, 'tags'), {
+			text: tagName,
+			user: auth.currentUser.uid,
+		})
+		console.log('Document written with ID: ', docRef.id)
+		return docRef
+	} catch (e) {
+		console.error('Error adding document: ', e)
+	}
+}
+
 async function getTags() {
 	try {
 		// Create a query against the collection.
@@ -90,4 +118,4 @@ function promptSignOut() {
 		})
 }
 
-export { firebaseApp, auth, promptSignIn, promptSignOut, storeThing, getTags }
+export { firebaseApp, auth, promptSignIn, promptSignOut, storeThing, getTags, storeTag, storeTaggedImage }

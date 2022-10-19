@@ -4,11 +4,10 @@
 // import './Result.scss'
 
 function Result(props) {
-	console.log(props)
 	return (
-		<li>
+		<li onMouseEnter={props.onSelect} className={props.selectedImage === props.index ? 'selected' : ''}>
 			<img src={props.data.link} />
-			{props.data.title}
+			<p>{props.data.title}</p>
 		</li>
 	)
 }

@@ -5,7 +5,11 @@
 
 function Tag(props) {
 	// console.log(props)
-	return <li>{props.data.text}</li>
+	return (
+		<li>
+			{props.data.text} <em>[{props.index}]</em>
+		</li>
+	)
 }
 
 export default Tag

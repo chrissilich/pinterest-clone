@@ -1,0 +1,46 @@
+section.tags {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: #222;
+	ul {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		flex-wrap: wrap;
+		li {
+			background: rgb(175, 7, 7);
+			color: white;
+			border-radius: 100px;
+			padding: 5px 15px;
+			font-size: 1.25rem;
+			margin: 0.75em 0.5em;
+			font-weight: 700;
+
+			em {
+				font-size: 1rem;
+				font-weight: 100;
+			}
+
+			&.plus {
+				// background: rgb(211, 76, 76);
+				input {
+					background: transparent;
+					color: white;
+					font-weight: 100;
+					font-size: 1.25rem;
+					border: 0;
+					width: 100px;
+					&::placeholder {
+						color: white;
+					}
+					&:focus {
+						&::placeholder {
+							color: rgba(255, 255, 255, 0.5);
+						}
+					}
+				}
+			}
+		}
+	}
+}
