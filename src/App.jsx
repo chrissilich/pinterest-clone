@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { search } from './services/google-search'
-import { storeThing, storeTaggedImage, storeTag, getTags, auth } from './services/firebase'
+import { storeTaggedImage, storeTag, getTags, auth } from './services/firebase'
 
 import Header from './components/Header'
 import Search from './components/Search'
@@ -10,8 +10,6 @@ import Tag from './components/Tag'
 import './App.scss'
 
 function App() {
-	// storeThing('chris', 'silich')
-
 	const [user, setUser] = useState(null)
 	const [tags, setTags] = useState([])
 	const [newTag, setNewTag] = useState('')
@@ -26,9 +24,11 @@ function App() {
 
 	useEffect(() => {
 		auth.onAuthStateChanged((user) => {
-			console.log('auth state changed')
+			console.log('auth state changed, App.jsx')
 			setUser(user)
 			getTags().then((tags) => {
+				console.log('got tags, App.jsx')
+				tags.map((tag) => (tag.active = false))
 				setTags(tags)
 			})
 		})
@@ -39,13 +39,24 @@ function App() {
 		return () => {
 			window.removeEventListener('keyup', tagSomething)
 		}
-	}, [])
+	}, [tags, results, selectedImage])
 
-	const tagSomething = async (e) => {
+	const tagSomething = async function (e) {
+		// console.warn('current state of tags', tags)
+		console.warn('current state of results', results)
 		let parsedKey = parseInt(e.key)
-		console.log('tagSomething', parsedKey, tags.length)
-		if (parsedKey <= tags.length) {
+		console.log('tagSomething', parsedKey, selectedImage)
+		if (parsedKey && parsedKey >= 0 && parsedKey <= tags.length && !isNaN(selectedImage)) {
 			storeTaggedImage(tags[parsedKey - 1].id, results[selectedImage].link)
+			tags[parsedKey - 1].active = true
+			console.log('modified tag state', tags[parsedKey - 1])
+			setTags([...tags])
+			setTimeout(() => {
+				tags[parsedKey - 1].active = false
+				setTags([...tags])
+			}, 1000)
+		} else {
+			console.warn('couldnt tag!')
 		}
 	}
 

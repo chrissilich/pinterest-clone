@@ -67,6 +67,7 @@ async function storeTag(tagName) {
 
 async function getTags() {
 	try {
+		if (!auth || !auth.currentUser) return []
 		// Create a query against the collection.
 		const q = query(tagsRef, where('user', '==', auth.currentUser.uid))
 		const querySnapshot = await getDocs(q)

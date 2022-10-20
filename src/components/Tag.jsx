@@ -6,7 +6,7 @@
 function Tag(props) {
 	// console.log(props)
 	return (
-		<li>
+		<li className={props.data.active ? 'active' : ''}>
 			{props.data.text} <em>[{props.index}]</em>
 		</li>
 	)
