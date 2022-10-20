@@ -21,7 +21,7 @@ let waitForClientLoadID = setInterval(function () {
 }, 50)
 
 async function search(term, page) {
-	return exampleresult.items
+	// return exampleresult.items
 
 	let searchOptions = {
 		q: term,
@@ -37,7 +37,7 @@ async function search(term, page) {
 		.then((response) => {
 			// Handle the results here (response.result has the parsed body).
 			console.log('Successful search response', response)
-			return response.items
+			return response.result.items
 		})
 		.catch((err) => {
 			console.error('Execute error', err)

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+
 import { search } from './services/google-search'
 import { storeTaggedImage, storeTag, getTags, auth } from './services/firebase'
 
@@ -7,9 +8,9 @@ import Search from './components/Search'
 import Result from './components/Result'
 import Tag from './components/Tag'
 
-import './App.scss'
+import './Home.scss'
 
-function App() {
+function Home() {
 	const [user, setUser] = useState(null)
 	const [tags, setTags] = useState([])
 	const [newTag, setNewTag] = useState('')
@@ -54,7 +55,7 @@ function App() {
 			setTimeout(() => {
 				tags[parsedKey - 1].active = false
 				setTags([...tags])
-			}, 1000)
+			}, 600)
 		} else {
 			console.warn('couldnt tag!')
 		}
@@ -125,4 +126,4 @@ function App() {
 	)
 }
 
-export default App
+export default Home
