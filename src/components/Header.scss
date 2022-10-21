@@ -1,7 +1,8 @@
 header {
 	position: fixed;
 	width: 100%;
-	background: #222;
+	background: rgba(black, 0.75);
+
 	display: flex;
 	flex-direction: row;
 	align-items: flex-end;
@@ -9,8 +10,21 @@ header {
 	width: 100%;
 	padding: 1em 0.75em;
 	font-size: 1.5rem;
-	h1 {
-		font-size: 3rem;
-		font-weight: bold;
+	align-items: center;
+
+	div.search {
+		margin: 0 2em;
+		flex-grow: 1;
+		input {
+			width: 100%;
+			display: block;
+			font-size: 2rem;
+			padding: 0.5em;
+		}
+	}
+
+	div.auth {
+		align-self: flex-end;
+		font-size: 1rem;
 	}
 }

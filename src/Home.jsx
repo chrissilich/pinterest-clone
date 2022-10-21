@@ -4,7 +4,6 @@ import { search } from './services/google-search'
 import { storeTaggedImage, storeTag, getTags, auth } from './services/firebase'
 
 import Header from './components/Header'
-import Search from './components/Search'
 import Result from './components/Result'
 import Tag from './components/Tag'
 
@@ -14,7 +13,7 @@ function Home() {
 	const [user, setUser] = useState(null)
 	const [tags, setTags] = useState([])
 	const [newTag, setNewTag] = useState('')
-	const [results, setResults] = useState([])
+	const [results, setResults] = useState(null)
 
 	// most recent query
 	let pageNumber = 0
@@ -86,9 +85,7 @@ function Home() {
 
 	return (
 		<div className="App">
-			<Header />
-
-			<Search submitSearchTerm={submitSearchTerm} />
+			<Header submitSearchTerm={submitSearchTerm} />
 
 			<section className="results">
 				<ul>

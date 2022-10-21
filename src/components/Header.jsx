@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
-
 import { auth, promptSignIn, promptSignOut, storeThing } from '../services/firebase'
-// import './Header.scss'
 
-function Header() {
+import Search from './Search'
+
+function Header(props) {
 	const [user, setUser] = useState(null)
 
 	useEffect(() => {
@@ -14,21 +14,30 @@ function Header() {
 		})
 	}, [])
 
+	const submitSearchTerm = async (searchTerm) => {
+		props.submitSearchTerm(searchTerm)
+	}
+
 	return (
 		<header>
-			<h1>React project thingy</h1>
-			{user ? (
-				<p>
-					Welcome {user.displayName} &nbsp;
-					<button className="btn btn-primary" onClick={promptSignOut}>
-						Sign out
+			<h1>Taggr</h1>
+
+			<Search submitSearchTerm={submitSearchTerm} />
+
+			<div className="auth">
+				{user ? (
+					<p>
+						Welcome {user.displayName} &nbsp;
+						<button className="btn btn-primary" onClick={promptSignOut}>
+							Sign out
+						</button>
+					</p>
+				) : (
+					<button className="btn btn-primary" onClick={promptSignIn}>
+						Sign in with Google
 					</button>
-				</p>
-			) : (
-				<button className="btn btn-primary" onClick={promptSignIn}>
-					Sign in with Google
-				</button>
-			)}
+				)}
+			</div>
 		</header>
 	)
 }

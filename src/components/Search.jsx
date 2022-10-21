@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import './Search.scss'
-
 function Search(props) {
 	const [searchTerm, setSearchTerm] = useState('')
 
@@ -12,7 +10,7 @@ function Search(props) {
 	}
 
 	return (
-		<section className="search">
+		<div className="search">
 			<input
 				onChange={(event) => setSearchTerm(event.target.value)}
 				onKeyDown={submitSearchTerm}
@@ -20,7 +18,7 @@ function Search(props) {
 				name="search-term"
 				placeholder="Search term..."
 			></input>
-		</section>
+		</div>
 	)
 }
 

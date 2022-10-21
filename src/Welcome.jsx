@@ -21,7 +21,7 @@ function Welcome() {
 	return (
 		<div className="Welcome">
 			<section>
-				<h1>Welcome</h1>
+				<h1>Welcome to Taggr</h1>
 				<h2>What's this?</h2>
 				<p>
 					It's an app for when you're researching the visual style of something. Sort of like Pinterest, but
