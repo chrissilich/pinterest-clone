@@ -7,11 +7,12 @@ function Header(props) {
 	const [user, setUser] = useState(null)
 
 	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
+		let unsubscribe = auth.onAuthStateChanged((user) => {
 			console.log('auth state changed')
 			setUser(user)
 			// console.log(user)
 		})
+		return unsubscribe
 	}, [])
 
 	const submitSearchTerm = async (searchTerm) => {

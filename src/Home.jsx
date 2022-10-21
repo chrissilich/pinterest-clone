@@ -23,15 +23,17 @@ function Home() {
 	const [selectedImage, setSelectedImage] = useState(-1)
 
 	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			console.log('auth state changed, App.jsx')
+		let unsubscribe = auth.onAuthStateChanged((user) => {
+			// console.log('auth state changed, App.jsx')
 			setUser(user)
 			getTags().then((tags) => {
-				console.log('got tags, App.jsx')
+				// console.log('got tags, App.jsx')
 				tags.map((tag) => (tag.active = false))
 				setTags(tags)
 			})
 		})
+
+		return unsubscribe
 	}, [])
 
 	useEffect(() => {
@@ -43,13 +45,13 @@ function Home() {
 
 	const tagSomething = async function (e) {
 		// console.warn('current state of tags', tags)
-		console.warn('current state of results', results)
+		// console.warn('current state of results', results)
 		let parsedKey = parseInt(e.key)
-		console.log('tagSomething', parsedKey, selectedImage)
+		// console.log('tagSomething', parsedKey, selectedImage)
 		if (parsedKey && parsedKey >= 0 && parsedKey <= tags.length && !isNaN(selectedImage)) {
 			storeTaggedImage(tags[parsedKey - 1].id, results[selectedImage].link)
 			tags[parsedKey - 1].active = true
-			console.log('modified tag state', tags[parsedKey - 1])
+			// console.log('modified tag state', tags[parsedKey - 1])
 			setTags([...tags])
 			setTimeout(() => {
 				tags[parsedKey - 1].active = false
@@ -61,12 +63,14 @@ function Home() {
 	}
 
 	const submitSearchTerm = async (term) => {
+		console.log('submitSearchTerm in Home.jsx')
 		if (term == recentSearchTerm) {
 			console.warn("don't search for the same thing again!")
 			return
 		}
 		recentSearchTerm = term
 		pageNumber = 0 // reset page number to 0
+		setResults([])
 		let results = await search(term, pageNumber)
 		setResults(results)
 	}

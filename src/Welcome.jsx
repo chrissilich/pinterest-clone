@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { auth } from './services/firebase'
+// import { auth } from './services/firebase'
 
 import Header from './components/Header'
 import Search from './components/Search'
@@ -9,14 +9,15 @@ import Search from './components/Search'
 import './Welcome.scss'
 
 function Welcome() {
-	const [user, setUser] = useState(null)
+	// const [user, setUser] = useState(null)
 
-	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			console.log('auth state changed, App.jsx')
-			setUser(user)
-		})
-	}, [])
+	// useEffect(() => {
+	// 	let unsubscribe = auth.onAuthStateChanged((user) => {
+	// 		console.log('auth state changed, App.jsx')
+	// 		setUser(user)
+	// 	})
+	// 	return unsubscribe
+	// }, [])
 
 	return (
 		<div className="Welcome">

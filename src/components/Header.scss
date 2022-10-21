@@ -1,5 +1,6 @@
 header {
 	position: fixed;
+	z-index: 1000;
 	width: 100%;
 	background: rgba(black, 0.75);
 
@@ -26,5 +27,9 @@ header {
 	div.auth {
 		align-self: flex-end;
 		font-size: 1rem;
+		button {
+			position: relative;
+			top: -8px;
+		}
 	}
 }

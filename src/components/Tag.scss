@@ -24,7 +24,7 @@ section.tags {
 			&.active {
 				// gets applied when you tag something with this tag
 				animation: shake 0.6s, bounce 0.5s;
-				background: lighten(rgb(175, 7, 7), 30%);
+				background: lighten(variables.$color-hero, 25%);
 			}
 
 			em {
