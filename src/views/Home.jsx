@@ -1,13 +1,11 @@
 import { useState, useEffect, useMemo } from 'react'
 
-import { search } from './services/google-search'
-import { storeTaggedImage, storeTag, getTags, auth } from './services/firebase'
+import { search } from '../services/google-search'
+import { storeTaggedImage, storeTag, getTags, auth } from '../services/firebase'
 
-import Header from './components/Header'
-import Result from './components/Result'
-import Tag from './components/Tag'
-
-import './Home.scss'
+import Header from '../components/Header'
+import Result from '../components/Result'
+import Tag from '../components/Tag'
 
 function Home() {
 	const [user, setUser] = useState(null)
@@ -49,7 +47,13 @@ function Home() {
 		let parsedKey = parseInt(e.key)
 		// console.log('tagSomething', parsedKey, selectedImage)
 		if (parsedKey && parsedKey >= 0 && parsedKey <= tags.length && !isNaN(selectedImage)) {
-			storeTaggedImage(tags[parsedKey - 1].id, results[selectedImage].link)
+			let imageData = {
+				snippet: results[selectedImage].snippet,
+				displayLink: results[selectedImage].displayLink,
+				contextLink: results[selectedImage].image.contextLink,
+				link: results[selectedImage].link,
+			}
+			storeTaggedImage(tags[parsedKey - 1].id, imageData)
 			tags[parsedKey - 1].active = true
 			// console.log('modified tag state', tags[parsedKey - 1])
 			setTags([...tags])

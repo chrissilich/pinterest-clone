@@ -3,12 +3,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,300;1,400&family=Libre+Baskerville:ital@0;1&display=swap');
 
-@import 'Home.scss';
-@import 'Welcome.scss';
+@import 'views/Home.scss';
+@import 'views/Welcome.scss';
+@import 'views/Tagged.scss';
 
 @import 'components/Header.scss';
-@import 'components/Result.scss';
-@import 'components/Tag.scss';
 @import 'components/Search.scss';
 
 * {
@@ -19,6 +18,9 @@ body {
 	background: black;
 	font-family: 'Lato', Helvetica, Arial, sans-serif;
 	font-size: 10pt;
+	em {
+		font-style: italic;
+	}
 }
 
 h1 {

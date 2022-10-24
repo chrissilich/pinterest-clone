@@ -1,6 +1,14 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
-import { getFirestore, collection, addDoc, getDocs, query, where } from 'firebase/firestore'
+import {
+	getFirestore,
+	collection,
+	addDoc,
+	getDocs,
+	query,
+	where,
+	limit,
+} from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -23,7 +31,7 @@ const provider = new GoogleAuthProvider()
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const tagsRef = collection(db, 'tags')
-// const imagesRef = collection(db, "images");
+const taggedRef = collection(db, 'tagged')
 
 async function storeThing(value1, value2) {
 	try {
@@ -37,14 +45,16 @@ async function storeThing(value1, value2) {
 	}
 }
 
-async function storeTaggedImage(tagId, image) {
-	console.log('storeTaggedImage', tagId, image)
+async function storeTaggedImage(tagId, imageData) {
+	console.log('storeTaggedImage', tagId, imageData)
 	try {
-		const docRef = await addDoc(collection(db, 'tagged'), {
+		const data = {
 			tag: tagId,
 			user: auth.currentUser.uid,
-			image,
-		})
+			...imageData,
+		}
+		console.log('data', data)
+		const docRef = await addDoc(collection(db, 'tagged'), data)
 		console.log('Document written with ID: ', docRef.id)
 		return docRef
 	} catch (e) {
@@ -70,6 +80,47 @@ async function getTags() {
 		if (!auth || !auth.currentUser) return []
 		// Create a query against the collection.
 		const q = query(tagsRef, where('user', '==', auth.currentUser.uid))
+		const querySnapshot = await getDocs(q)
+		let simplified = []
+		querySnapshot.forEach((doc) => {
+			simplified.push({ id: doc.id, ...doc.data() })
+		})
+		return simplified
+	} catch (e) {
+		console.error('Error finding document: ', e)
+	}
+}
+async function getTagById(tag) {
+	try {
+		if (!auth || !auth.currentUser) return []
+		// Create a query against the collection.
+		console.log('getTagById', tag)
+		const q = query(
+			tagsRef,
+			where('__name__', '==', tag),
+			where('user', '==', auth.currentUser.uid),
+			limit(1)
+		)
+		const querySnapshot = await getDocs(q)
+		let simplified = []
+		querySnapshot.forEach((doc) => {
+			simplified.push({ id: doc.id, ...doc.data() })
+		})
+		return simplified
+	} catch (e) {
+		console.error('Error getTagById: ', e)
+	}
+}
+
+async function getTaggedStuff($tag) {
+	try {
+		if (!auth || !auth.currentUser) return []
+		// Create a query against the collection.
+		const q = query(
+			taggedRef,
+			where('user', '==', auth.currentUser.uid),
+			where('tag', '==', $tag)
+		)
 		const querySnapshot = await getDocs(q)
 		let simplified = []
 		querySnapshot.forEach((doc) => {
@@ -119,4 +170,15 @@ function promptSignOut() {
 		})
 }
 
-export { firebaseApp, auth, promptSignIn, promptSignOut, storeThing, getTags, storeTag, storeTaggedImage }
+export {
+	firebaseApp,
+	auth,
+	promptSignIn,
+	promptSignOut,
+	storeThing,
+	getTags,
+	storeTag,
+	storeTaggedImage,
+	getTaggedStuff,
+	getTagById,
+}

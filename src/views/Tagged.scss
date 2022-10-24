@@ -1,0 +1,15 @@
+@use '../variables';
+div.tagged {
+	ul {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+		li {
+			width: 32%;
+			img {
+				width: 100%;
+			}
+		}
+	}
+}
