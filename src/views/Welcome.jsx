@@ -12,8 +12,8 @@ function Welcome() {
 				<h2>What's this?</h2>
 				<p>
 					It's an app for when you're researching the visual style of something.
-					Sort of like Pinterest, but using google image search, and much
-					faster.
+					Sort of like a simpler clone of Pinterest, but using google image
+					search, and much faster to work with.
 				</p>
 				<h2>How do I use it?</h2>
 				<p>
@@ -26,14 +26,13 @@ function Welcome() {
 					"tile" or any other way you might categorize your findings.
 				</p>
 				<p>
-					Now this is the part that makes this so much faster than Pinterest.
-					Scroll through the results, and if you like something, hover over it
-					and press the number key on your keyboard that corresponds with the
-					tag you want to tag it with.
+					Scroll through the results, find something you like, hover over it and
+					press the number key on your keyboard that corresponds with the tag
+					you want to tag it with.
 				</p>
 				<p>
-					And of course, after you're done, click on one of the tags to see
-					everything you applied it to
+					Once you're done tagging click on one of the tags to see everything
+					you applied it to.
 				</p>
 				<h2>Why?</h2>
 				<p>
