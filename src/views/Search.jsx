@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { search } from '../services/google-search'
 import { storeTaggedImage, storeTag, getTags, auth } from '../services/firebase'
 
+import Welcome from '../components/Welcome'
 import Header from '../components/Header'
 import Result from '../components/Result'
 import Tag from '../components/Tag'
@@ -103,15 +104,18 @@ function Search() {
 		}
 	}
 
+	console.log(results)
+
 	return (
 		<div className="App">
 			<Header />
 
-			<section className="results">
-				<ul>
-					{results &&
-						results.length &&
-						results.map((result, i) => (
+			{(!results || results.length == 0) && <Welcome />}
+
+			{results && results.length && (
+				<section className="results">
+					<ul>
+						{results.map((result, i) => (
 							<Result
 								onSelect={() => setSelectedImage(i)}
 								selectedImage={selectedImage}
@@ -120,8 +124,9 @@ function Search() {
 								data={result}
 							/>
 						))}
-				</ul>
-			</section>
+					</ul>
+				</section>
+			)}
 
 			<section className="tags">
 				<ul>

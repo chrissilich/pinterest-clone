@@ -1,29 +1,33 @@
 import { Link } from 'react-router-dom'
 
-import Header from '../components/Header'
-
 function Welcome() {
 	return (
 		<div className="Welcome">
-			{/* <Header submitSearchTerm={submitSearchTerm} /> */}
-
 			<section className="welcome">
-				<h1>Welcome to Taggr</h1>
-				<h2>What's this?</h2>
+				{/* <h1>Welcome to Taggr</h1> */}
+				<h2>What is Taggr?</h2>
 				<p>
 					It's an app for when you're researching the visual style of something.
 					Sort of like a simpler clone of Pinterest, but using google image
 					search, and much faster to work with.
 				</p>
+				<p>
+					And it has a cool web 2.0 name. Are we still doing cool web 2.0 names?
+					Remember when Twitter was called Twttr?
+				</p>
 				<h2>How do I use it?</h2>
 				<p>
-					On the next page, do a search. If you're just trying this out, I
+					Log into your google account. Don't worry, I'm just using Firebase to
+					store your activity on this app. I can't see anything else.
+				</p>
+				<p>
+					Do a search in the bar above. If you're just trying this out, I
 					suggest "modern fireplace" and imagine you're researching for your
 					next big home renovation project.
 				</p>
 				<p>
-					Then add a tag or two at the bottom of the screen. Maybe "mantle",
-					"tile" or any other way you might categorize your findings.
+					Add a tag or two at the bottom of the screen. Maybe "mantle", "tile"
+					or any other way you might categorize your findings.
 				</p>
 				<p>
 					Scroll through the results, find something you like, hover over it and
@@ -46,9 +50,6 @@ function Welcome() {
 					<a href="https://chrissilich.com" target="_blank">
 						chrissilich.com
 					</a>
-				</p>
-				<p className="go">
-					<Link to="/search">Go →</Link>
 				</p>
 			</section>
 		</div>

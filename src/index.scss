@@ -4,9 +4,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,300;1,400&family=Libre+Baskerville:ital@0;1&display=swap');
 
 @import 'views/Search.scss';
-@import 'views/Welcome.scss';
 @import 'views/Tagged.scss';
 
+@import 'components/Welcome.scss';
 @import 'components/Header.scss';
 
 * {
@@ -66,6 +66,7 @@ button {
 	color: white;
 	min-width: 100px;
 	font-size: 1.2rem;
+	cursor: pointer;
 }
 
 a {
