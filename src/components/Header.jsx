@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+
 import { auth, promptSignIn, promptSignOut, storeThing } from '../services/firebase'
 
 import SearchField from './SearchField'
@@ -21,14 +23,16 @@ function Header(props) {
 
 	return (
 		<header>
-			<h1>Taggr</h1>
+			<h1>
+				<Link to="/">Taggr</Link>
+			</h1>
 
 			<SearchField submitSearchTerm={submitSearchTerm} />
 
 			<div className="auth">
 				{user ? (
 					<p>
-						Welcome {user.displayName} &nbsp;
+						Welcome {user.displayName} <br />
 						<button className="btn btn-primary" onClick={promptSignOut}>
 							Sign out
 						</button>

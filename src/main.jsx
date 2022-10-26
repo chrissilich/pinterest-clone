@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom'
 import Search from './views/Search'
 import Tagged from './views/Tagged'
 
-import './index.scss'
+import './main.scss'
 
 const router = createBrowserRouter([
 	{

@@ -25,11 +25,13 @@ header {
 	}
 
 	div.auth {
+		text-align: right;
 		align-self: flex-end;
 		font-size: 1rem;
+		position: relative;
+		top: -8px;
 		button {
-			position: relative;
-			top: -8px;
+			margin-top: 0.4em;
 		}
 	}
 }

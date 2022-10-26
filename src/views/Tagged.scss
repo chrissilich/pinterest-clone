@@ -1,5 +1,7 @@
 @use '../variables';
-div.tagged {
+section.tagged {
+	padding: variables.$pad-top-for-header 2rem variables.$pad-bottom-for-footer;
+
 	ul {
 		display: flex;
 		flex-direction: row;

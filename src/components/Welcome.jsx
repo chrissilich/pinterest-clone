@@ -17,7 +17,7 @@ function Welcome() {
 				</p>
 				<h2>How do I use it?</h2>
 				<p>
-					Log into your google account. Don't worry, I'm just using Firebase to
+					Log in with Google account. Don't worry, I'm just using Firebase to
 					store your activity on this app. I can't see anything else.
 				</p>
 				<p>
