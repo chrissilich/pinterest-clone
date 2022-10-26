@@ -49,7 +49,7 @@ function Welcome() {
 					</a>
 				</p>
 				<p className="go">
-					<Link to="/home">Go →</Link>
+					<Link to="/search">Go →</Link>
 				</p>
 			</section>
 		</div>

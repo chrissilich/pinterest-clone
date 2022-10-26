@@ -1,12 +1,15 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-function Search(props) {
+function SearchField(props) {
 	const [searchTerm, setSearchTerm] = useState('')
+	const navigate = useNavigate()
 
 	const submitSearchTerm = async (event) => {
 		if (event.key === 'Enter') {
-			props.submitSearchTerm(searchTerm)
-			event.target.blur()
+			// props.submitSearchTerm(searchTerm)
+			// event.target.blur()
+			navigate('/search/' + searchTerm)
 		}
 	}
 
@@ -23,4 +26,4 @@ function Search(props) {
 	)
 }
 
-export default Search
+export default SearchField

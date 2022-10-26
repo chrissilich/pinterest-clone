@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { auth, promptSignIn, promptSignOut, storeThing } from '../services/firebase'
 
-import Search from './Search'
+import SearchField from './SearchField'
 
 function Header(props) {
 	const [user, setUser] = useState(null)
@@ -23,7 +23,7 @@ function Header(props) {
 		<header>
 			<h1>Taggr</h1>
 
-			<Search submitSearchTerm={submitSearchTerm} />
+			<SearchField submitSearchTerm={submitSearchTerm} />
 
 			<div className="auth">
 				{user ? (

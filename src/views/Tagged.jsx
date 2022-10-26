@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { auth, getTaggedStuff, getTagById } from '../services/firebase'
 
 import Header from '../components/Header'
-import Search from '../components/Search'
+import Search from '../components/SearchField'
 import TaggedItem from '../components/TaggedItem'
 
 function Tagged(params) {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom'
 
 import Welcome from './views/Welcome'
-import Home from './views/Home'
+import Search from './views/Search'
 import Tagged from './views/Tagged'
 
 import './index.scss'
@@ -14,8 +14,12 @@ const router = createBrowserRouter([
 		element: <Welcome />,
 	},
 	{
-		path: '/home',
-		element: <Home />,
+		path: '/search/:term',
+		element: <Search />,
+	},
+	{
+		path: '/search',
+		element: <Search />,
 	},
 	{
 		path: '/tagged/:tag',

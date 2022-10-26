@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 import { search } from '../services/google-search'
 import { storeTaggedImage, storeTag, getTags, auth } from '../services/firebase'
@@ -7,11 +8,13 @@ import Header from '../components/Header'
 import Result from '../components/Result'
 import Tag from '../components/Tag'
 
-function Home() {
+function Search() {
 	const [user, setUser] = useState(null)
 	const [tags, setTags] = useState([])
 	const [newTag, setNewTag] = useState('')
 	const [results, setResults] = useState(null)
+
+	const urlParams = useParams()
 
 	// most recent query
 	let pageNumber = 0
@@ -46,7 +49,12 @@ function Home() {
 		// console.warn('current state of results', results)
 		let parsedKey = parseInt(e.key)
 		// console.log('tagSomething', parsedKey, selectedImage)
-		if (parsedKey && parsedKey >= 0 && parsedKey <= tags.length && !isNaN(selectedImage)) {
+		if (
+			parsedKey &&
+			parsedKey >= 0 &&
+			parsedKey <= tags.length &&
+			!isNaN(selectedImage)
+		) {
 			let imageData = {
 				snippet: results[selectedImage].snippet,
 				displayLink: results[selectedImage].displayLink,
@@ -66,16 +74,20 @@ function Home() {
 		}
 	}
 
-	const submitSearchTerm = async (term) => {
-		console.log('submitSearchTerm in Home.jsx')
-		if (term == recentSearchTerm) {
-			console.warn("don't search for the same thing again!")
+	useEffect(() => {
+		submitSearchTerm()
+	}, [urlParams])
+
+	let submitSearchTerm = async () => {
+		if (!urlParams.term) {
+			console.log('search page with no term')
 			return
 		}
-		recentSearchTerm = term
+		console.log('search page with term', urlParams.term)
+
 		pageNumber = 0 // reset page number to 0
 		setResults([])
-		let results = await search(term, pageNumber)
+		let results = await search(urlParams.term, pageNumber)
 		setResults(results)
 	}
 
@@ -93,7 +105,7 @@ function Home() {
 
 	return (
 		<div className="App">
-			<Header submitSearchTerm={submitSearchTerm} />
+			<Header />
 
 			<section className="results">
 				<ul>
@@ -131,4 +143,4 @@ function Home() {
 	)
 }
 
-export default Home
+export default Search
