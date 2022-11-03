@@ -104,18 +104,17 @@ function Search() {
 		}
 	}
 
-	console.log(results)
-
 	return (
 		<div className="App">
 			<Header />
 
 			{(!results || results.length == 0) && <Welcome />}
 
-			{results && results.length && (
-				<section className="results">
-					<ul>
-						{results.map((result, i) => (
+			<section className="results">
+				<ul>
+					{results &&
+						results.length &&
+						results.map((result, i) => (
 							<Result
 								onSelect={() => setSelectedImage(i)}
 								selectedImage={selectedImage}
@@ -124,26 +123,27 @@ function Search() {
 								data={result}
 							/>
 						))}
+				</ul>
+			</section>
+
+			{user && (
+				<section className="tags">
+					<ul>
+						<li className="plus">
+							<input
+								onChange={(event) => setNewTag(event.target.value)}
+								onKeyDown={submitNewTag}
+								placeholder="new tag..."
+							/>
+						</li>
+						{tags &&
+							tags.length &&
+							tags.map((tag, i) => {
+								return <Tag key={tag.id} data={tag} index={i + 1} />
+							})}
 					</ul>
 				</section>
 			)}
-
-			<section className="tags">
-				<ul>
-					<li className="plus">
-						<input
-							onChange={(event) => setNewTag(event.target.value)}
-							onKeyDown={submitNewTag}
-							placeholder="new tag..."
-						/>
-					</li>
-					{tags &&
-						tags.length &&
-						tags.map((tag, i) => {
-							return <Tag key={tag.id} data={tag} index={i + 1} />
-						})}
-				</ul>
-			</section>
 		</div>
 	)
 }

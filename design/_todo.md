@@ -6,6 +6,7 @@
 -   Add lightboxing?
 -   Add ability to untag on the tagged page
 -   Add ability to delete tags
+-   submitting tag should empty the new tag box
 
 ##Done
 

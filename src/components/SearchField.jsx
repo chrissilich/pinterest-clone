@@ -53,8 +53,7 @@ function SearchField(props) {
 
 	const submitSearchTerm = async (event) => {
 		if (event.key === 'Enter') {
-			// props.submitSearchTerm(searchTerm)
-			// event.target.blur()
+			event.target.blur()
 			navigate('/search/' + searchTerm)
 		}
 	}
