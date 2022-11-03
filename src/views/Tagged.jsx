@@ -35,7 +35,7 @@ function Tagged(params) {
 	}, [user, urlParams])
 
 	return (
-		<div>
+		<div className="App">
 			<Header />
 
 			<section className="tagged">
