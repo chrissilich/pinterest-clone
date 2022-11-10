@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLoaderData, useParams } from 'react-router-dom'
+
+import { useBottomScrollListener } from 'react-bottom-scroll-listener'
 
 import { search } from '../services/google-search'
 import { storeTaggedImage, storeTag, getTags, auth } from '../services/firebase'
@@ -9,17 +11,16 @@ import Header from '../components/Header'
 import Result from '../components/Result'
 import Tag from '../components/Tag'
 
+import LoaderImage from '../assets/loader.svg'
+
 function Search() {
 	const [user, setUser] = useState(null)
 	const [tags, setTags] = useState([])
 	const [newTag, setNewTag] = useState('')
 	const [results, setResults] = useState(null)
+	const [pageNumber, setPageNumber] = useState(null)
 
 	const urlParams = useParams()
-
-	// most recent query
-	let pageNumber = 0
-	let recentSearchTerm = ''
 
 	// selections
 	const [selectedImage, setSelectedImage] = useState(-1)
@@ -79,6 +80,15 @@ function Search() {
 		submitSearchTerm()
 	}, [urlParams])
 
+	useBottomScrollListener(
+		() => {
+			getMoreSearchResults()
+		},
+		{
+			debounce: true,
+		}
+	)
+
 	let submitSearchTerm = async () => {
 		if (!urlParams.term) {
 			console.log('search page with no term')
@@ -86,10 +96,26 @@ function Search() {
 		}
 		console.log('search page with term', urlParams.term)
 
-		pageNumber = 0 // reset page number to 0
+		setPageNumber(0) // reset page number to 0
 		setResults([])
-		let results = await search(urlParams.term, pageNumber)
-		setResults(results)
+		let newResults = await search(urlParams.term, pageNumber)
+		setResults(newResults)
+	}
+
+	let getMoreSearchResults = async () => {
+		setPageNumber(pageNumber + 1)
+		console.log(
+			'search another page with term',
+			urlParams.term,
+			' page number ',
+			pageNumber + 1
+		)
+		if (pageNumber > 10) {
+			console.warn('lets stop at 10 pages')
+			return
+		}
+		let newResults = await search(urlParams.term, pageNumber)
+		setResults([...results, ...newResults])
 	}
 
 	const submitNewTag = (event) => {
@@ -119,12 +145,20 @@ function Search() {
 								onSelect={() => setSelectedImage(i)}
 								selectedImage={selectedImage}
 								index={i}
-								key={result.link}
+								key={result.key}
 								data={result}
 							/>
 						))}
 				</ul>
 			</section>
+
+			{results && results.length && (
+				<div className="load-more">
+					<img src={LoaderImage} />
+					<br />
+					Loading more results
+				</div>
+			)}
 
 			{user && (
 				<section className="tags">

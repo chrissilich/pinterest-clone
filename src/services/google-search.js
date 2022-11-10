@@ -27,17 +27,21 @@ async function search(term, page) {
 		q: term,
 		cx: '75899d8a2b153407f',
 		size: 'large',
-		page: page + 1,
+		start: page * 15,
 		searchType: 'image',
 		safe: 'active',
 	}
+	console.log('send search to google with options', searchOptions)
 
 	return gapi.client.search.cse
 		.list(searchOptions)
 		.then((response) => {
 			// Handle the results here (response.result has the parsed body).
-			console.log('Successful search response', response)
-			return response.result.items
+			// console.log('Successful search response', response)
+			return response.result.items.map((i) => {
+				i.key = Math.random()
+				return i
+			})
 		})
 		.catch((err) => {
 			console.error('Execute error', err)

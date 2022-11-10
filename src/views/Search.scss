@@ -51,6 +51,16 @@ section.results {
 	}
 }
 
+div.load-more {
+	padding: 0 0 8rem 0;
+	text-align: center;
+	font-size: 2em;
+	color: #555;
+	img {
+		width: 80px;
+	}
+}
+
 section.tags {
 	position: fixed;
 	bottom: 0;
